@@ -1,63 +1,48 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+        <section className={styles.hero}>
+          <p className={styles.eyebrow}>Fundacao do produto</p>
+          <h1>NossoBebe esta pronto para receber a implementacao do MVP.</h1>
+          <p className={styles.description}>
+            A base do projeto foi criada com Next.js, preparada para Supabase,
+            Vercel e para os requisitos de seguranca definidos nos documentos do
+            produto.
           </p>
-        </div>
+        </section>
+
+        <section className={styles.grid} aria-label="Progresso da fundacao">
+          <article className={styles.card}>
+            <span>Estrutura</span>
+            <strong>Next.js App Router</strong>
+            <p>Projeto inicializado com TypeScript, ESLint e pasta src.</p>
+          </article>
+          <article className={styles.card}>
+            <span>Backend</span>
+            <strong>Supabase base</strong>
+            <p>Clients de browser e server prontos para a proxima etapa.</p>
+          </article>
+          <article className={styles.card}>
+            <span>Seguranca</span>
+            <strong>Headers iniciais</strong>
+            <p>Headers obrigatorios aplicados no app desde o inicio.</p>
+          </article>
+          <article className={styles.card}>
+            <span>Proximo bloco</span>
+            <strong>Schema e auth admin</strong>
+            <p>Banco, storage privado e autenticacao operacional.</p>
+          </article>
+        </section>
+
         <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+          <a className={styles.primary} href="/criar">
+            Abrir wizard do pedido
           </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a className={styles.secondary} href="/admin">
+            Abrir dashboard
           </a>
         </div>
       </main>
