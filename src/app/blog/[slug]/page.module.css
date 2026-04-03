@@ -1,0 +1,79 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.article {
+  width: min(100%, 820px);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px;
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(231, 76, 139, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(46, 134, 193, 0.12), transparent 32%),
+    var(--surface-primary);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent-blue);
+}
+
+.header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.description,
+.header small {
+  color: var(--foreground-muted);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.content :global(h1),
+.content :global(h2),
+.content :global(h3) {
+  font-family: var(--font-serif);
+  line-height: 1.05;
+}
+
+.content :global(h2) {
+  margin-top: 8px;
+  font-size: 2rem;
+}
+
+.content :global(p),
+.content :global(li) {
+  line-height: 1.9;
+  color: var(--foreground-strong);
+}
+
+.content :global(ul),
+.content :global(ol) {
+  padding-left: 22px;
+}
+
+.content :global(a) {
+  color: var(--color-accent-blue);
+  font-weight: 700;
+}

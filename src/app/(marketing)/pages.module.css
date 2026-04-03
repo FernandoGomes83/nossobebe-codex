@@ -1,0 +1,39 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.article {
+  width: min(100%, 820px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(231, 76, 139, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(46, 134, 193, 0.12), transparent 32%),
+    var(--surface-primary);
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent-blue);
+}
+
+.article h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.article p {
+  line-height: 1.9;
+  color: var(--foreground-strong);
+}

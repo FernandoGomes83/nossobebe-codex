@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -38,12 +40,15 @@ export default function Home() {
         </section>
 
         <div className={styles.ctas}>
-          <a className={styles.primary} href="/criar">
+          <Link className={styles.primary} href="/criar">
             Abrir wizard do pedido
-          </a>
-          <a className={styles.secondary} href="/admin">
+          </Link>
+          <Link className={styles.secondary} href="/admin">
             Abrir dashboard
-          </a>
+          </Link>
+          <Link className={styles.secondary} href="/blog">
+            Abrir blog
+          </Link>
         </div>
       </main>
     </div>
