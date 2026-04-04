@@ -217,7 +217,7 @@ Evidencias:
 
 ## Milestone 11: Blog e AdSense readiness
 
-Status: `quase feito`
+Status: `feito`
 
 Feito:
 
@@ -225,16 +225,19 @@ Feito:
 - template editorial
 - template programatico de nomes
 - paginas institucionais
-
-Pendente:
-
-- preparar slots e estrutura explicita para AdSense sem degradar a base
+- script do AdSense isolado nas rotas de `/blog`
+- slots lazy e opcionais por env, sem impacto no restante do site
+- `AdBreak` explicito no MDX editorial e estrutura equivalente nas paginas programaticas
+- CTA final e pontos de monetizacao preparados sem tocar no fluxo de compra
 
 Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/layout.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/layout.tsx)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/[slug]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/[slug]/page.tsx)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/[slug]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/[slug]/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/components/blog/ad-slot.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/components/blog/ad-slot.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/mdx-components.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/mdx-components.tsx)
 
 ## Milestone 12: Conteudo inicial
 
@@ -287,17 +290,18 @@ Evidencias:
 
 Bloco:
 
-- `feat: implement drip consent, scheduling and unsubscribe`
+- `feat: prepare blog adsense structure`
 
 Escopo:
 
-- consentimento explicito de emails semanais no checkout
-- criacao de jobs reais com cron autenticado e processamento idempotente
-- unsubscribe publico com cancelamento da fila pendente
+- script do AdSense carregado apenas no blog com `lazyOnload`
+- slots opcionais por env para inline, meio e pre-CTA
+- `AdBreak` no MDX e estrutura equivalente nas paginas de nomes
+- checklist operacional atualizado com envs opcionais de monetizacao
 
 Commit:
 
-- `d401fbb`
+- `0d919f8`
 
 ## Proximo bloco correto
 
@@ -310,13 +314,13 @@ Retomar os pendentes restantes de:
 
 Depois disso, atacar:
 
-- `Milestone 11`
 - `Milestone 12`
 
 Escopo alvo:
 
 - fechar `zod` nas rotas restantes
 - testar concorrencia e duplicidade de webhook
+- aumentar o volume de conteudo para submissao no AdSense
 - revisar checklist final do `docs/SECURITY.md`
 
 ## Regra operacional
