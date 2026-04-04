@@ -106,6 +106,17 @@ export function CreateOrderForm() {
       </section>
 
       <form action={formAction} className={styles.form}>
+        <div aria-hidden="true" className={styles.honeypot}>
+          <label htmlFor="website">Nao preencha este campo</label>
+          <input
+            autoComplete="off"
+            id="website"
+            name="website"
+            tabIndex={-1}
+            type="text"
+          />
+        </div>
+
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
             <p className={styles.step}>Etapa 1</p>

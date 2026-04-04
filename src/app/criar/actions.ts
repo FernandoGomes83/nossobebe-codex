@@ -26,6 +26,17 @@ export async function validateDraftOrder(
   _previousState: DraftOrderActionState,
   formData: FormData,
 ): Promise<DraftOrderActionState> {
+  const honeypotValue = formData.get("website");
+
+  if (typeof honeypotValue === "string" && honeypotValue.trim().length > 0) {
+    return {
+      success: false,
+      message:
+        "Nao foi possivel iniciar o checkout agora. Tente novamente em instantes.",
+      fieldErrors: {},
+    };
+  }
+
   const normalized = normalizeOrderDraftInput({
     customerEmail: formData.get("customerEmail") ?? undefined,
     babyName: formData.get("babyName") ?? undefined,

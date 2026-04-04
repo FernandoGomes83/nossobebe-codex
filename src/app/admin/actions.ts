@@ -83,7 +83,7 @@ export async function uploadDeliverableAction(formData: FormData) {
 }
 
 export async function publishDeliverableAction(formData: FormData) {
-  await requireAdmin();
+  const { user } = await requireAdmin();
 
   const orderId = normalizeStatus(formData.get("orderId"));
   const deliverableId = normalizeStatus(formData.get("deliverableId"));
@@ -97,11 +97,43 @@ export async function publishDeliverableAction(formData: FormData) {
     orderId,
   });
 
-  try {
-    await notifyDeliveryPublished(orderId);
-  } catch {
-    // Email failure should not block manual publication.
+  const admin = createAdminClient();
+  const { data: order } = await admin
+    .from("orders")
+    .select("status, ready_at")
+    .eq("id", orderId)
+    .maybeSingle();
+
+  const shouldMarkReady =
+    !!order && order.status !== "ready" && order.status !== "delivered";
+
+  if (shouldMarkReady) {
+    const readyAt = new Date().toISOString();
+
+    await admin
+      .from("orders")
+      .update({
+        status: "ready",
+        ready_at: order.ready_at ?? readyAt,
+      })
+      .eq("id", orderId);
+
+    await admin.from("order_status_events").insert({
+      order_id: orderId,
+      from_status: order.status,
+      to_status: "ready",
+      actor_type: "admin",
+      actor_user_id: user.id,
+      note: "Pedido marcado como pronto ao publicar o primeiro entregavel.",
+    });
+
+    try {
+      await notifyDeliveryPublished(orderId);
+    } catch {
+      // Email failure should not block manual publication.
+    }
   }
 
+  revalidatePath("/admin");
   revalidatePath(`/admin/pedidos/${orderId}`);
 }
