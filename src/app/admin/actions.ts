@@ -5,16 +5,24 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/admin";
 import { notifyDeliveryPublished } from "@/lib/orders/email-events";
 import {
+  type ManualOrderStatus,
+  MANUAL_ORDER_STATUSES,
+  resolveManualOrderStatusTransition,
+} from "@/lib/orders/status";
+import {
   isAllowedDeliverableMime,
   publishDeliverable,
   uploadDeliverable,
 } from "@/lib/orders/deliverables";
 import { createAdminClient } from "@/lib/supabase/admin";
-
-const allowedStatuses = ["in_production", "ready", "delivered"] as const;
+import { scheduleOrderUploadDeletion } from "@/lib/uploads/cleanup";
 
 function normalizeStatus(value: FormDataEntryValue | null) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function isManualOrderStatus(value: string): value is ManualOrderStatus {
+  return MANUAL_ORDER_STATUSES.includes(value as ManualOrderStatus);
 }
 
 export async function updateOrderStatusAction(formData: FormData) {
@@ -22,36 +30,77 @@ export async function updateOrderStatusAction(formData: FormData) {
   const orderId = normalizeStatus(formData.get("orderId"));
   const nextStatus = normalizeStatus(formData.get("nextStatus"));
 
-  if (!orderId || !allowedStatuses.includes(nextStatus as (typeof allowedStatuses)[number])) {
+  if (!orderId || !isManualOrderStatus(nextStatus)) {
     return;
   }
 
   const admin = createAdminClient();
+  const { data: order } = await admin
+    .from("orders")
+    .select("status, production_started_at, ready_at, delivered_at")
+    .eq("id", orderId)
+    .maybeSingle();
+
+  if (!order) {
+    return;
+  }
+
+  const transition = resolveManualOrderStatusTransition(order.status, nextStatus);
+
+  if (!transition.allowed) {
+    return;
+  }
+
+  if (!transition.changed) {
+    revalidatePath("/admin");
+    revalidatePath(`/admin/pedidos/${orderId}`);
+    return;
+  }
+
   const now = new Date().toISOString();
   const patch: Record<string, string> = {
-    status: nextStatus,
+    status: transition.nextStatus,
   };
 
-  if (nextStatus === "in_production") {
-    patch.production_started_at = now;
+  if (transition.nextStatus === "in_production") {
+    patch.production_started_at = order.production_started_at ?? now;
   }
 
-  if (nextStatus === "ready") {
-    patch.ready_at = now;
+  if (transition.nextStatus === "ready") {
+    patch.ready_at = order.ready_at ?? now;
   }
 
-  if (nextStatus === "delivered") {
-    patch.delivered_at = now;
+  if (transition.nextStatus === "delivered") {
+    patch.delivered_at = order.delivered_at ?? now;
   }
 
-  await admin.from("orders").update(patch).eq("id", orderId);
+  const { data: updatedOrder } = await admin
+    .from("orders")
+    .update(patch)
+    .eq("id", orderId)
+    .eq("status", order.status)
+    .select("id")
+    .maybeSingle();
+
+  if (!updatedOrder) {
+    return;
+  }
+
   await admin.from("order_status_events").insert({
     order_id: orderId,
-    to_status: nextStatus,
+    from_status: order.status,
+    to_status: transition.nextStatus,
     actor_type: "admin",
     actor_user_id: user.id,
     note: "Status alterado pelo painel admin.",
   });
+
+  if (
+    transition.nextStatus === "ready" ||
+    transition.nextStatus === "delivered"
+  ) {
+    await scheduleOrderUploadDeletion(orderId);
+  }
 
   revalidatePath("/admin");
   revalidatePath(`/admin/pedidos/${orderId}`);
@@ -104,16 +153,18 @@ export async function publishDeliverableAction(formData: FormData) {
     .eq("id", orderId)
     .maybeSingle();
 
-  const shouldMarkReady =
-    !!order && order.status !== "ready" && order.status !== "delivered";
+  const readyTransition = order
+    ? resolveManualOrderStatusTransition(order.status, "ready")
+    : null;
+  const shouldMarkReady = !!readyTransition?.allowed && readyTransition.changed;
 
-  if (shouldMarkReady) {
+  if (shouldMarkReady && order && readyTransition) {
     const readyAt = new Date().toISOString();
 
     await admin
       .from("orders")
       .update({
-        status: "ready",
+        status: readyTransition.nextStatus,
         ready_at: order.ready_at ?? readyAt,
       })
       .eq("id", orderId);
@@ -121,7 +172,7 @@ export async function publishDeliverableAction(formData: FormData) {
     await admin.from("order_status_events").insert({
       order_id: orderId,
       from_status: order.status,
-      to_status: "ready",
+      to_status: readyTransition.nextStatus,
       actor_type: "admin",
       actor_user_id: user.id,
       note: "Pedido marcado como pronto ao publicar o primeiro entregavel.",
@@ -133,6 +184,8 @@ export async function publishDeliverableAction(formData: FormData) {
       // Email failure should not block manual publication.
     }
   }
+
+  await scheduleOrderUploadDeletion(orderId);
 
   revalidatePath("/admin");
   revalidatePath(`/admin/pedidos/${orderId}`);

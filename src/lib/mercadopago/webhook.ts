@@ -33,16 +33,30 @@ export function validateMercadoPagoWebhookSignature(input: {
 }) {
   const parsed = parseSignatureHeader(input.signatureHeader);
 
-  if (!parsed || !input.requestIdHeader || !input.dataId) {
+  if (!parsed) {
     return false;
   }
 
   const env = getServerEnv();
-  const manifest = `id:${input.dataId.toLowerCase()};request-id:${input.requestIdHeader};ts:${parsed.ts};`;
+  const manifestParts = [`ts:${parsed.ts};`];
+
+  if (input.dataId) {
+    manifestParts.unshift(`id:${input.dataId.toLowerCase()};`);
+  }
+
+  if (input.requestIdHeader) {
+    manifestParts.splice(1, 0, `request-id:${input.requestIdHeader};`);
+  }
+
+  const manifest = manifestParts.join("");
   const expected = crypto
     .createHmac("sha256", env.mercadoPagoWebhookSecret)
     .update(manifest)
     .digest("hex");
+
+  if (parsed.v1.length !== expected.length) {
+    return false;
+  }
 
   return crypto.timingSafeEqual(
     Buffer.from(parsed.v1, "utf8"),

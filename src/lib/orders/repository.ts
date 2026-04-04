@@ -7,6 +7,7 @@ import { encryptEmail, hashEmail } from "@/lib/security/crypto";
 import { createPreferenceClient } from "@/lib/mercadopago/client";
 import { getServerEnv } from "@/lib/env";
 import { formatPrice } from "@/lib/catalog";
+import { getCheckoutUploadDeleteAfter } from "@/lib/uploads/cleanup";
 
 function addHours(date: Date, hours: number) {
   return new Date(date.getTime() + hours * 60 * 60 * 1000);
@@ -63,7 +64,7 @@ export async function createOrderCheckout(input: OrderDraftInput) {
       .from("uploads")
       .update({
         order_id: order.id,
-        delete_after: null,
+        delete_after: getCheckoutUploadDeleteAfter(),
       })
       .eq("id", input.uploadedPhotoId)
       .is("order_id", null);

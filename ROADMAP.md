@@ -77,11 +77,12 @@ Feito:
 - rate limiting base nas rotas criticas
 - responses genericas para o client
 - honeypot no formulario publico
+- endurecimento do webhook com validacao estrutural, idempotencia menos fragil e transicoes seguras
 
 Pendente:
 
 - garantir `zod` em todas as rotas sem excecao
-- fortalecer protecao de transicoes criticas com revisao final de idempotencia e concorrencia
+- revisar transicoes criticas restantes com testes de concorrencia
 - revisar sanitizacao de campos livres de ponta a ponta
 - revisar logs e respostas para confirmar ausencia de vazamento sensivel
 
@@ -94,7 +95,7 @@ Evidencias:
 
 ## Milestone 4: Upload seguro
 
-Status: `parcial`
+Status: `feito`
 
 Feito:
 
@@ -102,15 +103,14 @@ Feito:
 - validacao por MIME, magic bytes e decode real
 - remocao de EXIF e normalizacao
 - armazenamento em bucket privado com UUID
-
-Pendente:
-
 - limpeza automatica de upload nao convertido em pedido pago
 - limpeza automatica da foto apos uso operacional
 
 Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/uploads/baby-photo/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/uploads/baby-photo/route.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/uploads/cleanup.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/uploads/cleanup.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/internal/cleanup/uploads/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/internal/cleanup/uploads/route.ts)
 
 ## Milestone 5: Catalogo e regras comerciais
 
@@ -257,13 +257,16 @@ Evidencias:
 
 ## Milestone 13: Hardening
 
-Status: `em andamento`
+Status: `parcial`
 
 Feito:
 
 - parte do rate limit
 - honeypot no formulario publico
 - correcao da duplicacao do email de entrega
+- endurecimento de webhook com recuperacao de evento preso e sem regressao de status
+- validacao de transicoes operacionais no admin
+- limpeza automatizada de uploads expirados
 
 Pendente:
 
@@ -283,39 +286,38 @@ Evidencias:
 
 Bloco:
 
-- `fix: harden public order flow`
+- `fix: harden payment webhook and upload cleanup`
 
 Escopo:
 
-- adicao de honeypot no pedido
-- bloqueio server-side do honeypot
-- envio do email de entrega apenas na transicao real para `ready`
+- validacao estrutural e idempotencia mais segura no webhook do Mercado Pago
+- transicoes de status protegidas no webhook e no admin
+- limpeza automatica de uploads expirados e fotos apos uso operacional
 
 Commit:
 
-- `2cf6758`
+- `pendente`
 
 ## Proximo bloco correto
-
-Fechar os pendentes mais criticos de:
-
-- `Milestone 3`
-- `Milestone 4`
-- `Milestone 13`
-
-Escopo alvo:
-
-- endurecer validacoes do webhook do Mercado Pago
-- adicionar limpeza automatica de uploads e fotos expiradas
-- revisar transicoes criticas e abuso em rotas publicas
-
-## Bloco seguinte
 
 Fechar os pendentes de `Milestone 10`:
 
 - preferencia e consentimento de drip
 - agendamento de jobs reais
 - unsubscribe
+
+## Bloco seguinte
+
+Retomar os pendentes restantes de:
+
+- `Milestone 3`
+- `Milestone 13`
+
+Escopo alvo:
+
+- fechar `zod` nas rotas restantes
+- testar concorrencia e duplicidade de webhook
+- revisar checklist final do `docs/SECURITY.md`
 
 ## Regra operacional
 
