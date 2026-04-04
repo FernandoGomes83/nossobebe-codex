@@ -1,266 +1,327 @@
 # Roadmap
 
-## Objetivo
+## Fonte de verdade
 
-Entregar o MVP do Nossobebe com:
+Este arquivo segue o backlog original do projeto. O objetivo aqui e manter:
 
-- venda de `pack + avulsos`
-- checkout assíncrono com Mercado Pago Checkout Pro
-- operação manual pelo admin
-- entrega digital segura
-- blog e páginas programáticas para SEO e AdSense
-- segurança tratada como requisito de entrada
+- status real de cada milestone
+- o ultimo bloco implementado
+- o proximo bloco correto
+- a regra operacional de atualizar este arquivo a cada bloco
 
-## Regras do projeto
+## Regras fixas do projeto
 
 - stack: `Next.js + Vercel + Supabase`
 - pagamento: `Mercado Pago Checkout Pro`
 - emails: `Resend`
-- rate limit distribuído: `Upstash Redis`
+- rate limit distribuido: `Upstash Redis`
 - acesso do cliente por token assinado, sem login
-- geração de conteúdo do pedido é manual no MVP
+- geracao do produto e manual no MVP
 - modo presente fica para fase 2
-- upsells físicos ficam para fase 3
-- antes de integrar libs/SDKs, consultar docs atuais via `ctx7`
+- upsells fisicos ficam para fase 3
+- antes de integrar libs, SDKs, APIs ou CLIs, consultar docs atuais via `ctx7`
+- ao fim de cada bloco: atualizar este arquivo e fazer push para o remoto
 
-## Milestones
+## Ordem de execucao
 
-### 1. Fundação
+1. Milestones `1`, `2`, `3`
+2. Milestone `4`
+3. Milestones `5`, `6`
+4. Milestones `7`, `8`, `9`
+5. Milestone `10`
+6. Milestones `11`, `12`
+7. Milestone `13`
+
+## Milestone 1: Fundacao
 
 Status: `feito`
 
-Escopo:
+Escopo original:
 
-- bootstrap do app em Next.js
-- integração base com Supabase
-- variáveis de ambiente e utilitários de env
-- headers de segurança
-- base visual inicial
+- inicializar o app com Next.js App Router, TypeScript, ESLint, Prettier e estrutura modular
+- configurar ambientes local, preview e prod com variaveis e secrets
+- integrar Supabase ao app
+- configurar observabilidade basica
+- configurar headers de seguranca e CSP inicial
 
-Referências principais:
+Evidencias:
 
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/next.config.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/next.config.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/env.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/env.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/supabase/server.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/supabase/server.ts)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/next.config.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/next.config.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/supabase/browser.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/supabase/browser.ts)
 
-### 2. Banco e segurança base
+## Milestone 2: Modelo de dados
 
 Status: `feito`
 
-Escopo:
+Escopo original:
 
-- schema inicial no Supabase
-- buckets privados
-- auth separada para admin
-- token assinado para pedido
-- criptografia/hash de email
-- rate limit com fallback local e suporte a Upstash
+- criar schema inicial do banco
+- definir enums, constraints, indices e idempotencia
+- definir politica de retencao de dados e limpeza
 
-Referências principais:
+Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/supabase/migrations/20260403_000001_initial_foundation.sql](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/supabase/migrations/20260403_000001_initial_foundation.sql)
+
+## Milestone 3: Seguranca minima obrigatoria
+
+Status: `parcial`
+
+Feito:
+
+- validacao com `zod` nas partes centrais do fluxo publico
+- auth separada para admin
+- token assinado para acesso do cliente ao pedido
+- rate limiting base nas rotas criticas
+- responses genericas para o client
+- honeypot no formulario publico
+
+Pendente:
+
+- garantir `zod` em todas as rotas sem excecao
+- fortalecer protecao de transicoes criticas com revisao final de idempotencia e concorrencia
+- revisar sanitizacao de campos livres de ponta a ponta
+- revisar logs e respostas para confirmar ausencia de vazamento sensivel
+
+Evidencias:
+
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/schema.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/schema.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/auth/admin.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/auth/admin.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/order-access-token.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/order-access-token.ts)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/crypto.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/crypto.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/rate-limit.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/rate-limit.ts)
 
-### 3. Pedido e checkout
+## Milestone 4: Upload seguro
 
-Status: `feito`
+Status: `parcial`
 
-Escopo:
+Feito:
 
-- catálogo com pack e avulsos
-- regra de ancoragem comercial do pack
-- wizard de pedido
-- upload seguro da foto
-- criação do pedido e da sessão de checkout
-- integração com Mercado Pago Checkout Pro
-- página pública de status do pedido
+- fluxo de upload temporario da foto
+- validacao por MIME, magic bytes e decode real
+- remocao de EXIF e normalizacao
+- armazenamento em bucket privado com UUID
 
-Referências principais:
+Pendente:
 
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/catalog.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/catalog.ts)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/schema.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/schema.ts)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/repository.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/repository.ts)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/page.tsx)
+- limpeza automatica de upload nao convertido em pedido pago
+- limpeza automatica da foto apos uso operacional
+
+Evidencias:
+
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/uploads/baby-photo/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/uploads/baby-photo/route.ts)
 
-### 4. Webhook e estados do pedido
+## Milestone 5: Catalogo e regras comerciais
 
 Status: `feito`
 
-Escopo:
+Escopo original:
 
-- webhook do Mercado Pago
-- confirmação assíncrona do pagamento
-- atualização dos estados do pedido
-- registro de eventos operacionais
+- modelar catalogo com pack e avulsos
+- permitir multiplos produtos avulsos no mesmo pedido
+- implementar regra de ancora de preco do pack
+- implementar aviso e upsell para troca de avulsos pelo pack
 
-Referências principais:
+Evidencias:
 
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/catalog.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/catalog.ts)
+
+## Milestone 6: Interface publica
+
+Status: `feito`
+
+Observacao:
+
+- existe interface publica funcional e consistente
+- o design system existe de forma implicita na base visual, mas nao foi separado como camada formal
+
+Evidencias:
+
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/_components/create-order-form.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/_components/create-order-form.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx)
+
+## Milestone 7: Checkout assincrono
+
+Status: `feito`
+
+Observacao:
+
+- o fluxo principal esta implementado
+- ainda cabe endurecimento adicional do webhook e testes de idempotencia
+
+Evidencias:
+
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/repository.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/repository.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/webhooks/mercadopago/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/webhooks/mercadopago/route.ts)
 
-### 5. Admin operacional
+## Milestone 8: Entrega
 
 Status: `feito`
 
-Escopo:
+Escopo original:
 
-- login admin
-- dashboard básico
-- detalhe do pedido
-- mudança manual de status
-- upload e publicação de entregáveis
+- estrutura de entregaveis privados
+- upload admin dos entregaveis finais
+- publicacao da entrega
+- links assinados com expiracao
+- pagina de entrega final
 
-Referências principais:
+Evidencias:
 
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/login/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/login/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/deliverables.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/deliverables.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/pedido/[token]/zip/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/pedido/[token]/zip/route.ts)
+
+## Milestone 9: Admin operacional
+
+Status: `feito`
+
+Escopo original:
+
+- dashboard minimo de pedidos
+- tela de detalhe operacional
+- acoes operacionais minimas
+
+Evidencias:
+
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/page.tsx)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/pedidos/[id]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/pedidos/[id]/page.tsx)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/actions.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/actions.ts)
 
-### 6. Entrega digital
+## Milestone 10: Email
 
-Status: `feito`
+Status: `parcial`
 
-Escopo:
+Feito:
 
-- signed URLs para entregáveis
-- página pública do pedido com downloads
-- ZIP consolidado do pedido
+- integracao com Resend
+- emails transacionais
+  - pedido recebido
+  - pagamento aprovado
+  - entrega pronta
 
-Referências principais:
+Pendente:
 
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/pedido/[token]/page.tsx)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/pedido/[token]/zip/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/pedido/[token]/zip/route.ts)
+- preferencia e consentimento de drip
+- agendamento de drip semanal
+- unsubscribe
 
-### 7. Emails transacionais
+Evidencias:
 
-Status: `feito`
-
-Escopo:
-
-- email de pedido criado
-- email de pagamento aprovado
-- email de entrega pronta
-
-Referências principais:
-
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/client.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/client.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/service.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/service.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/email-events.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/email-events.ts)
 
-### 8. Blog, SEO e base para AdSense
+## Milestone 11: Blog e AdSense readiness
 
-Status: `feito`
+Status: `quase feito`
 
-Escopo:
+Feito:
 
-- blog em MDX
-- páginas institucionais
-- sitemap e robots
-- schema JSON-LD
-- breadcrumbs
-- páginas programáticas de nomes
+- MDX no app
+- template editorial
+- template programatico de nomes
+- paginas institucionais
 
-Referências principais:
+Pendente:
+
+- preparar slots e estrutura explicita para AdSense sem degradar a base
+
+Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/page.tsx)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/page.tsx)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/layout.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/layout.tsx)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/sitemap.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/sitemap.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/[slug]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/[slug]/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/[slug]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/blog/nomes/[slug]/page.tsx)
 
-### 9. Conteúdo inicial
+## Milestone 12: Conteudo inicial
 
-Status: `feito`
+Status: `parcial`
 
-Escopo:
+Feito:
 
-- artigos editoriais iniciais
-- base inicial de páginas programáticas de nomes
+- lote inicial de conteudo editorial
+- lote inicial de paginas programaticas de nomes
+- sitemap, robots e linking base
 
-Referências principais:
+Pendente:
+
+- aumentar o volume ate o patamar desejado para submissao no AdSense
+
+Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/content/blog](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/content/blog)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/content/names.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/content/names.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/sitemap.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/sitemap.ts)
 
-### 10. Operação e produção
-
-Status: `feito`
-
-Escopo:
-
-- setup operacional
-- checklist de produção
-- bootstrap do primeiro admin
-- scripts de validação de ambiente e smoke check
-
-Referências principais:
-
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/SETUP.md](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/SETUP.md)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/PRODUCTION_CHECKLIST.md](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/PRODUCTION_CHECKLIST.md)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/bootstrap-admin.mjs](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/bootstrap-admin.mjs)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/check-env.mjs](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/check-env.mjs)
-- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/smoke-check.mjs](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/scripts/smoke-check.mjs)
-
-### 11. Hardening do MVP
+## Milestone 13: Hardening
 
 Status: `em andamento`
 
-Feito até agora:
+Feito:
 
-- rate limit nas rotas críticas
-- deduplicação prática do email de entrega
-- honeypot no formulário público
+- parte do rate limit
+- honeypot no formulario publico
+- correcao da duplicacao do email de entrega
 
-Referências principais:
+Pendente:
+
+- testar race conditions em pagamentos e transicoes criticas
+- testar duplicidade de webhook
+- testar abuso de upload e limites
+- testar expiracao de links e acesso indevido
+- revisar checklist final do `docs/SECURITY.md`
+
+Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/rate-limit.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/security/rate-limit.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/actions.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/criar/actions.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/actions.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/admin/actions.ts)
 
-## Último bloco implementado
+## Ultimo bloco implementado
 
-`fix: harden public order flow`
+Bloco:
+
+- `fix: harden public order flow`
 
 Escopo:
 
-- adição de honeypot no pedido
+- adicao de honeypot no pedido
 - bloqueio server-side do honeypot
-- envio do email de entrega apenas na transição real para `ready`
+- envio do email de entrega apenas na transicao real para `ready`
 
 Commit:
 
 - `2cf6758`
 
-## Próximo bloco
+## Proximo bloco correto
 
-### Hardening do webhook e limpeza operacional
+Fechar os pendentes mais criticos de:
 
-Status planejado: `próximo`
+- `Milestone 3`
+- `Milestone 4`
+- `Milestone 13`
 
-Escopo:
+Escopo alvo:
 
-- endurecer validações do webhook do Mercado Pago
-- adicionar limpeza automática de uploads/fotos expiradas
-- revisar mais pontos de abuso em rotas públicas
+- endurecer validacoes do webhook do Mercado Pago
+- adicionar limpeza automatica de uploads e fotos expiradas
+- revisar transicoes criticas e abuso em rotas publicas
 
 ## Bloco seguinte
 
-### Drip básico
+Fechar os pendentes de `Milestone 10`:
 
-Status planejado: `depois do próximo bloco`
+- preferencia e consentimento de drip
+- agendamento de jobs reais
+- unsubscribe
 
-Escopo:
+## Regra operacional
 
-- começar a usar `drip_jobs`
-- registrar jobs reais no banco
-- preparar disparo inicial com Resend
+Ao fim de cada bloco:
 
-## Como usar este arquivo
-
-Atualizar ao fim de cada bloco:
-
-- milestone afetado
-- status
-- commit do bloco
-- próximo bloco planejado
+1. atualizar este `ROADMAP.md`
+2. validar o bloco
+3. criar commit
+4. fazer push para o remoto
