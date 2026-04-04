@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "generate:secrets": "node scripts/generate-secrets.mjs",
-    "bootstrap:admin": "node scripts/bootstrap-admin.mjs"
+    "bootstrap:admin": "node scripts/bootstrap-admin.mjs",
+    "check:env": "node scripts/check-env.mjs",
+    "smoke:check": "node scripts/smoke-check.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

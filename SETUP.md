@@ -66,6 +66,7 @@ Build validado localmente:
 ```bash
 npm run lint
 npx next build --webpack
+npm run smoke:check
 ```
 
 ## Bootstrap inicial
@@ -87,6 +88,12 @@ Esse comando:
 - cria o usuário no Auth com email confirmado
 - grava `role=admin` em `app_metadata`
 - insere o usuário em `public.admin_users`
+
+Validar variáveis obrigatórias antes de subir:
+
+```bash
+npm run check:env
+```
 
 ## Observações
 
