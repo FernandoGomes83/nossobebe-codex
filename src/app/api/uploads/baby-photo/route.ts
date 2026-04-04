@@ -21,10 +21,11 @@ function jsonError(message: string, status = 400) {
 }
 
 export async function POST(request: NextRequest) {
-  const rateLimit = consumeRateLimit({
+  const rateLimit = await consumeRateLimit({
     key: `upload:${getClientIp(request.headers)}`,
     limit: 5,
     windowMs: 60 * 1000,
+    prefix: "ratelimit:upload",
   });
 
   if (!rateLimit.allowed) {

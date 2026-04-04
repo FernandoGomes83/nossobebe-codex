@@ -38,10 +38,11 @@ function mapPaymentStatus(status: string | null | undefined) {
 }
 
 export async function POST(request: NextRequest) {
-  const rateLimit = consumeRateLimit({
+  const rateLimit = await consumeRateLimit({
     key: `webhook:${getClientIp(request.headers)}`,
     limit: 30,
     windowMs: 60 * 1000,
+    prefix: "ratelimit:webhook",
   });
 
   if (!rateLimit.allowed) {
