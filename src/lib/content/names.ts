@@ -82,6 +82,150 @@ export const NAME_ENTRIES: NameEntry[] = [
     combinations: ["Arthur Miguel", "Arthur Henrique", "Arthur Gabriel", "Arthur Benjamin"],
     famousPeople: ["Arthur Conan Doyle", "Arthur Aguiar", "Arthur Friedenreich"],
   },
+  {
+    slug: "laura",
+    name: "Laura",
+    origin: "Latina",
+    meaning: "Relacionada a louros, vitoria e delicadeza classica.",
+    personality:
+      "Laura costuma soar suave, elegante e confiavel, com um perfil afetuoso e muito lembrado.",
+    popularity:
+      "Laura permanece forte no Brasil e aparece como uma escolha tradicional que continua moderna.",
+    combinations: ["Laura Beatriz", "Laura Valentina", "Maria Laura", "Ana Laura"],
+    famousPeople: ["Laura Cardoso", "Laura Pausini", "Laura Neiva"],
+  },
+  {
+    slug: "alice",
+    name: "Alice",
+    origin: "Germânica",
+    meaning: "Associado a nobreza e qualidade elevada em diversas leituras.",
+    personality:
+      "Alice costuma transmitir leveza, delicadeza e um toque classico muito reconhecivel.",
+    popularity:
+      "Alice segue entre os nomes femininos mais escolhidos no Brasil e se manteve forte nos ultimos anos.",
+    combinations: ["Alice Helena", "Maria Alice", "Alice Sophia", "Alice Valentina"],
+    famousPeople: ["Alice Braga", "Alice Cooper", "Alice Wegmann"],
+  },
+  {
+    slug: "valentina",
+    name: "Valentina",
+    origin: "Latina",
+    meaning: "Ligado a forca, vigor e firmeza.",
+    personality:
+      "Valentina tem uma sonoridade marcante e costuma ser percebido como um nome forte e afetivo.",
+    popularity:
+      "Valentina e muito presente nos rankings recentes de nomes femininos no Brasil.",
+    combinations: ["Maria Valentina", "Valentina Sofia", "Ana Valentina", "Valentina Helena"],
+    famousPeople: ["Valentina Herszage", "Valentina Zenere"],
+  },
+  {
+    slug: "isis",
+    name: "Isis",
+    origin: "Egipcia",
+    meaning: "Nome historico associado a maternidade, protecao e feminilidade.",
+    personality:
+      "Isis e curto, marcante e passa uma sensacao de identidade forte e singular.",
+    popularity:
+      "Isis aparece como uma opcao menos massificada, mas com forte reconhecimento no Brasil.",
+    combinations: ["Isis Helena", "Maria Isis", "Ana Isis", "Isis Valentina"],
+    famousPeople: ["Isis Valverde", "Isis de Oliveira"],
+  },
+  {
+    slug: "noah",
+    name: "Noah",
+    origin: "Hebraica",
+    meaning: "Frequentemente ligado a descanso, paz e tranquilidade.",
+    personality:
+      "Noah passa uma sensacao moderna, internacional e muito leve.",
+    popularity:
+      "Noah cresceu com forca entre familias que buscam nomes curtos e globais.",
+    combinations: ["Noah Miguel", "Noah Gabriel", "Noah Levi", "Noah Benjamin"],
+    famousPeople: ["Noah Centineo", "Noah Schnapp"],
+  },
+  {
+    slug: "levi",
+    name: "Levi",
+    origin: "Hebraica",
+    meaning: "Associado a uniao, ligacao e proximidade.",
+    personality:
+      "Levi transmite firmeza e simplicidade, com sonoridade curta e marcante.",
+    popularity:
+      "Levi ganhou tracao no Brasil e hoje aparece com frequencia entre nomes curtos masculinos.",
+    combinations: ["Levi Miguel", "Levi Gabriel", "Levi Theo", "Levi Arthur"],
+    famousPeople: ["Levi Strauss"],
+  },
+  {
+    slug: "maite",
+    name: "Maite",
+    origin: "Basca",
+    meaning: "Ligado a amor e carinho em interpretacoes populares.",
+    personality:
+      "Maite costuma soar doce, diferente e memoravel, com boa musicalidade.",
+    popularity:
+      "Maite ainda e menos comum que outros nomes femininos, o que aumenta a sensacao de exclusividade.",
+    combinations: ["Maite Helena", "Maria Maite", "Maite Sofia", "Maite Cecilia"],
+    famousPeople: ["Maitê Proença"],
+  },
+  {
+    slug: "benicio",
+    name: "Benicio",
+    origin: "Latina",
+    meaning: "Associado a bondade e boas qualidades.",
+    personality:
+      "Benicio tem um tom forte e carismatico, com cara de nome contemporaneo.",
+    popularity:
+      "Benicio cresceu no Brasil junto com a procura por nomes sonoros e distintos.",
+    combinations: ["Benicio Miguel", "Benicio Arthur", "Benicio Gael", "Benicio Theo"],
+    famousPeople: ["Benicio del Toro"],
+  },
+  {
+    slug: "sophia",
+    name: "Sophia",
+    origin: "Grega",
+    meaning: "Relacionada a sabedoria e inteligencia.",
+    personality:
+      "Sophia costuma ser associada a delicadeza, presenca e um perfil sofisticado.",
+    popularity:
+      "Sophia continua entre os nomes femininos mais populares no Brasil.",
+    combinations: ["Sophia Helena", "Maria Sophia", "Sophia Valentina", "Ana Sophia"],
+    famousPeople: ["Sophia Abrahão", "Sophia Loren"],
+  },
+  {
+    slug: "joaquim",
+    name: "Joaquim",
+    origin: "Hebraica",
+    meaning: "Tradicionalmente ligado a Deus estabelece ou Deus confirma.",
+    personality:
+      "Joaquim tem um peso classico e uma sonoridade forte, muito valorizada por familias que preferem nomes tradicionais.",
+    popularity:
+      "Joaquim voltou a ganhar espaco no Brasil com a retomada de nomes classicos masculinos.",
+    combinations: ["Joaquim Miguel", "Joaquim Pedro", "Joaquim Arthur", "Joaquim Levi"],
+    famousPeople: ["Joaquim Barbosa", "Joaquim Lopes", "Joaquim Maria Machado de Assis"],
+  },
+  {
+    slug: "liz",
+    name: "Liz",
+    origin: "Hebraica",
+    meaning: "Forma curta associada a promessa e plenitude em nomes compostos da mesma raiz.",
+    personality:
+      "Liz e um nome curto, delicado e de facil memorizacao, com apelo moderno e refinado.",
+    popularity:
+      "Liz se consolidou como escolha recorrente entre nomes femininos curtos no Brasil.",
+    combinations: ["Maria Liz", "Liz Helena", "Ana Liz", "Liz Sophia"],
+    famousPeople: ["Liz Taylor", "Liz Gillies"],
+  },
+  {
+    slug: "davi",
+    name: "Davi",
+    origin: "Hebraica",
+    meaning: "Comumente associado a amado ou querido.",
+    personality:
+      "Davi transmite proximidade, simplicidade e forca, com reconhecimento muito alto.",
+    popularity:
+      "Davi continua entre os nomes masculinos mais fortes e frequentes no Brasil.",
+    combinations: ["Davi Lucas", "Davi Miguel", "Joao Davi", "Davi Henrique"],
+    famousPeople: ["Davi Brito", "Davi Lucca"],
+  },
 ];
 
 export function listNames() {
