@@ -38,6 +38,20 @@ export default async function BlogIndexPage() {
           </article>
         ))}
       </section>
+
+      <section className={styles.namesCta}>
+        <div>
+          <p className={styles.eyebrow}>Conteudo programatico</p>
+          <h2>Explore a secao de nomes do bebê.</h2>
+          <p className={styles.description}>
+            A area de nomes concentra paginas pensadas para SEO de cauda longa,
+            snippets diretos e links internos para o produto.
+          </p>
+        </div>
+        <Link className={styles.namesLink} href="/blog/nomes">
+          Abrir secao de nomes
+        </Link>
+      </section>
     </main>
   );
 }

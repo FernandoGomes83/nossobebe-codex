@@ -1,0 +1,84 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.article {
+  width: min(100%, 820px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(231, 76, 139, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(46, 134, 193, 0.12), transparent 32%),
+    var(--surface-primary);
+}
+
+.header,
+.section,
+.ctaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent-blue);
+}
+
+.header h1,
+.section h2,
+.ctaBox h2 {
+  font-family: var(--font-serif);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.header h1 {
+  font-size: clamp(2.6rem, 4vw, 4rem);
+}
+
+.section h2,
+.ctaBox h2 {
+  font-size: 2rem;
+}
+
+.description,
+.section p,
+.section li,
+.ctaBox p {
+  line-height: 1.9;
+  color: var(--foreground-strong);
+}
+
+.section ul {
+  padding-left: 22px;
+}
+
+.ctaBox {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(231, 76, 139, 0.08);
+}
+
+.ctaBox a {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #fffafc;
+  background: linear-gradient(135deg, #e74c8b, #cc3c76);
+  font-weight: 700;
+}

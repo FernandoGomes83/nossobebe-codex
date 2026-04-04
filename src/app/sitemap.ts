@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
 
 import { getAllBlogPosts } from "@/lib/content/blog";
+import { listNames } from "@/lib/content/names";
 
 const siteUrl = process.env.APP_URL || "https://nossobebe.com.br";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllBlogPosts();
+  const names = listNames();
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -23,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${siteUrl}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/blog/nomes`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
@@ -60,5 +68,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogRoutes];
+  const namesRoutes: MetadataRoute.Sitemap = names.map((entry) => ({
+    url: `${siteUrl}/blog/nomes/${entry.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...blogRoutes, ...namesRoutes];
 }

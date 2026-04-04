@@ -20,6 +20,7 @@
 }
 
 .eyebrow {
+  margin-top: 12px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -29,7 +30,7 @@
 
 .hero h1 {
   margin-top: 12px;
-  max-width: 14ch;
+  max-width: 15ch;
   font-family: var(--font-serif);
   font-size: clamp(2.8rem, 5vw, 4.8rem);
   line-height: 0.95;
@@ -49,40 +50,6 @@
   gap: 16px;
 }
 
-.namesCta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 28px;
-  border: 1px solid var(--border-soft);
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at top left, rgba(231, 76, 139, 0.12), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(46, 134, 193, 0.12), transparent 32%),
-    var(--surface-primary);
-}
-
-.namesCta h2 {
-  margin-top: 10px;
-  font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-}
-
-.namesLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 18px;
-  border-radius: 999px;
-  color: #fffafc;
-  background: linear-gradient(135deg, #e74c8b, #cc3c76);
-  font-weight: 700;
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -100,7 +67,7 @@
 
 .card h2 {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   line-height: 1.05;
 }
 
@@ -109,14 +76,8 @@
   line-height: 1.7;
 }
 
-.meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
+.card a {
   margin-top: auto;
-}
-
-.meta a {
   font-weight: 700;
   color: var(--color-accent-blue);
 }
@@ -124,10 +85,5 @@
 @media (max-width: 780px) {
   .grid {
     grid-template-columns: 1fr;
-  }
-
-  .namesCta {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }
