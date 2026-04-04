@@ -1,8 +1,11 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BlogAdSlot } from "@/components/blog/ad-slot";
 import { getBlogPost, listBlogSlugs } from "@/lib/content/blog";
+import { getAdsenseConfig } from "@/lib/adsense";
 import { buildBreadcrumbJsonLd } from "@/lib/seo/faq";
 import { buildArticleJsonLd } from "@/lib/seo/json-ld";
 
@@ -44,6 +47,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const Post = post.default;
+  const adsense = getAdsenseConfig();
   const siteUrl = process.env.APP_URL || "https://nossobebe.com.br";
   const articleJsonLd = buildArticleJsonLd({
     title: post.metadata.title,
@@ -91,6 +95,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className={styles.content}>
           <Post />
         </div>
+
+        <BlogAdSlot
+          clientId={adsense.clientId}
+          slotId={adsense.blogSlots.footer}
+          title="Publicidade"
+          variant="footer"
+        />
+
+        <section className={styles.ctaBox}>
+          <h2>Eternize esta fase do seu bebe</h2>
+          <p>
+            Transforme nome, historia e carinho em um pack digital com canção,
+            poster e certificado para guardar por muitos anos.
+          </p>
+          <Link href="/criar">Criar o pack do bebê</Link>
+        </section>
       </article>
     </main>
   );

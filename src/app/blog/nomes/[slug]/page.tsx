@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { BlogAdSlot } from "@/components/blog/ad-slot";
+import { getAdsenseConfig } from "@/lib/adsense";
 import { getNameEntry, listNames } from "@/lib/content/names";
 import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/seo/faq";
 import { buildArticleJsonLd } from "@/lib/seo/json-ld";
@@ -47,6 +49,7 @@ export default async function NamePage({ params }: NamePageProps) {
   }
 
   const siteUrl = process.env.APP_URL || "https://nossobebe.com.br";
+  const adsense = getAdsenseConfig();
   const pageUrl = `${siteUrl}/blog/nomes/${entry.slug}`;
   const articleJsonLd = buildArticleJsonLd({
     title: `Significado do nome ${entry.name}`,
@@ -116,6 +119,13 @@ export default async function NamePage({ params }: NamePageProps) {
           </p>
         </section>
 
+        <BlogAdSlot
+          clientId={adsense.clientId}
+          slotId={adsense.blogSlots.inline}
+          title="Espaco patrocinado"
+          variant="inline"
+        />
+
         <section className={styles.section}>
           <h2>Personalidade de quem se chama {entry.name}</h2>
           <p>{entry.personality}</p>
@@ -125,6 +135,13 @@ export default async function NamePage({ params }: NamePageProps) {
           <h2>Popularidade do nome {entry.name} no Brasil</h2>
           <p>{entry.popularity}</p>
         </section>
+
+        <BlogAdSlot
+          clientId={adsense.clientId}
+          slotId={adsense.blogSlots.middle}
+          title="Publicidade relacionada"
+          variant="middle"
+        />
 
         <section className={styles.section}>
           <h2>Nomes que combinam com {entry.name}</h2>
@@ -143,6 +160,13 @@ export default async function NamePage({ params }: NamePageProps) {
             ))}
           </ul>
         </section>
+
+        <BlogAdSlot
+          clientId={adsense.clientId}
+          slotId={adsense.blogSlots.footer}
+          title="Publicidade"
+          variant="footer"
+        />
 
         <section className={styles.ctaBox}>
           <h2>Eternize o nome {entry.name}</h2>

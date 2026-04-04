@@ -27,8 +27,14 @@ Copie `.env.example` para `.env.local` e preencha:
 
 - `UPSTASH_REDIS_REST_URL`
 - `UPSTASH_REDIS_REST_TOKEN`
+- `NEXT_PUBLIC_ADSENSE_CLIENT_ID`
+- `NEXT_PUBLIC_ADSENSE_BLOG_INLINE_SLOT`
+- `NEXT_PUBLIC_ADSENSE_BLOG_MIDDLE_SLOT`
+- `NEXT_PUBLIC_ADSENSE_BLOG_FOOTER_SLOT`
 
 Sem Upstash, o projeto usa um fallback local em memória para rate limiting. Isso é aceitável para desenvolvimento, mas não para produção real.
+
+As variáveis de AdSense são opcionais e afetam apenas as rotas de `/blog`. Sem elas, os slots preparados no código não renderizam.
 
 ## Supabase
 

@@ -56,6 +56,8 @@
 
 - [ ] `/blog` carregando
 - [ ] `/blog/nomes` carregando
+- [ ] `NEXT_PUBLIC_ADSENSE_CLIENT_ID` configurado, se a monetização for ativada agora
+- [ ] Slots `NEXT_PUBLIC_ADSENSE_BLOG_*` configurados para os artigos do blog, se a monetização for ativada agora
 - [ ] `robots.txt` carregando
 - [ ] `sitemap.xml` carregando
 - [ ] Páginas institucionais publicadas

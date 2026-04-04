@@ -50,6 +50,40 @@
   gap: 18px;
 }
 
+.ctaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(231, 76, 139, 0.08);
+}
+
+.ctaBox h2 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.ctaBox p {
+  line-height: 1.9;
+  color: var(--foreground-strong);
+}
+
+.ctaBox a {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #fffafc;
+  background: linear-gradient(135deg, #e74c8b, #cc3c76);
+  font-weight: 700;
+}
+
 .content :global(h1),
 .content :global(h2),
 .content :global(h3) {
