@@ -1,11 +1,39 @@
 import Link from "next/link";
 
+import { buildFaqJsonLd } from "@/lib/seo/faq";
+
 import styles from "./page.module.css";
 
+const faqItems = [
+  {
+    question: "Em quanto tempo o pack fica pronto?",
+    answer:
+      "No MVP atual, a entrega acontece de forma manual em até 24 horas após a aprovação do pagamento.",
+  },
+  {
+    question: "Posso comprar apenas um item em vez do pack completo?",
+    answer:
+      "Sim. O cliente pode comprar produtos avulsos, embora o pack completo tenha melhor custo-benefício.",
+  },
+  {
+    question: "Como recebo meus arquivos?",
+    answer:
+      "A entrega acontece em uma página segura do pedido, com links temporários para download dos entregáveis publicados.",
+  },
+];
+
 export default function Home() {
+  const faqJsonLd = buildFaqJsonLd(faqItems);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd),
+          }}
+          type="application/ld+json"
+        />
         <section className={styles.hero}>
           <p className={styles.eyebrow}>Fundacao do produto</p>
           <h1>NossoBebe esta pronto para receber a implementacao do MVP.</h1>
@@ -50,6 +78,22 @@ export default function Home() {
             Abrir blog
           </Link>
         </div>
+
+        <section className={styles.faqSection}>
+          <div className={styles.sectionHeader}>
+            <p className={styles.eyebrow}>FAQ</p>
+            <h2>Perguntas frequentes do MVP</h2>
+          </div>
+
+          <div className={styles.faqGrid}>
+            {faqItems.map((item) => (
+              <article key={item.question} className={styles.faqCard}>
+                <strong>{item.question}</strong>
+                <p>{item.answer}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );

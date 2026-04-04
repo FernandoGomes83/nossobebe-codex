@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import styles from "../pages.module.css";
+import { MarketingPageShell } from "../page-shell";
 
 export const metadata: Metadata = {
   title: "Sobre | NossoBebe",
@@ -9,10 +9,12 @@ export const metadata: Metadata = {
 
 export default function SobrePage() {
   return (
-    <main className={styles.page}>
-      <article className={styles.article}>
-        <p className={styles.eyebrow}>Sobre o projeto</p>
-        <h1>NossoBebe transforma momentos em registros afetivos.</h1>
+    <MarketingPageShell
+      currentLabel="Sobre"
+      currentPath="/sobre"
+      eyebrow="Sobre o projeto"
+      title="NossoBebe transforma momentos em registros afetivos."
+    >
         <p>
           O NossoBebe nasceu para ajudar familias a registrar os primeiros dias
           do bebe com produtos digitais personalizados, linguagem acolhedora e
@@ -22,7 +24,6 @@ export default function SobrePage() {
           O produto principal combina canção, arte e lembrancas do nascimento em
           um fluxo simples de compra e entrega digital.
         </p>
-      </article>
-    </main>
+    </MarketingPageShell>
   );
 }

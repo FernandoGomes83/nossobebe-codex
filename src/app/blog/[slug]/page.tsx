@@ -1,7 +1,9 @@
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getBlogPost, listBlogSlugs } from "@/lib/content/blog";
+import { buildBreadcrumbJsonLd } from "@/lib/seo/faq";
 import { buildArticleJsonLd } from "@/lib/seo/json-ld";
 
 import styles from "./page.module.css";
@@ -49,6 +51,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     publishedAt: post.metadata.publishedAt,
     url: `${siteUrl}/blog/${slug}`,
   });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Inicio", item: siteUrl },
+    { name: "Blog", item: `${siteUrl}/blog` },
+    { name: post.metadata.title, item: `${siteUrl}/blog/${slug}` },
+  ]);
 
   return (
     <main className={styles.page}>
@@ -59,7 +66,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           }}
           type="application/ld+json"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbJsonLd),
+          }}
+          type="application/ld+json"
+        />
         <header className={styles.header}>
+          <Breadcrumbs
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: post.metadata.title },
+            ]}
+          />
           <p className={styles.category}>{post.metadata.category}</p>
           <h1>{post.metadata.title}</h1>
           <p className={styles.description}>{post.metadata.description}</p>

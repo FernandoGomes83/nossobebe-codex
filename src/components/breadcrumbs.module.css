@@ -1,0 +1,28 @@
+.wrapper {
+  margin-bottom: 8px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  color: var(--foreground-muted);
+  font-size: 0.92rem;
+}
+
+.list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list li:not(:last-child)::after {
+  content: "/";
+  color: rgba(32, 50, 67, 0.35);
+}
+
+.list a {
+  color: var(--color-accent-blue);
+  font-weight: 600;
+}

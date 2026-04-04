@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
 const siteUrl = process.env.APP_URL || "https://nossobebe.com.br";
@@ -79,7 +81,9 @@ export default function RootLayout({
           }}
           type="application/ld+json"
         />
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import styles from "../pages.module.css";
+import { MarketingPageShell } from "../page-shell";
 
 export const metadata: Metadata = {
   title: "Privacidade | NossoBebe",
@@ -9,10 +9,12 @@ export const metadata: Metadata = {
 
 export default function PrivacidadePage() {
   return (
-    <main className={styles.page}>
-      <article className={styles.article}>
-        <p className={styles.eyebrow}>Privacidade</p>
-        <h1>Tratamento minimo, finalidade clara e exclusao sob solicitacao.</h1>
+    <MarketingPageShell
+      currentLabel="Privacidade"
+      currentPath="/privacidade"
+      eyebrow="Privacidade"
+      title="Tratamento minimo, finalidade clara e exclusao sob solicitacao."
+    >
         <p>
           O NossoBebe trata os dados estritamente necessarios para executar o
           pedido, entregar os arquivos e, quando houver consentimento, enviar
@@ -22,7 +24,6 @@ export default function PrivacidadePage() {
           Fotos do bebe sao armazenadas em bucket privado e devem ser removidas
           apos o uso operacional definido no fluxo interno.
         </p>
-      </article>
-    </main>
+    </MarketingPageShell>
   );
 }
