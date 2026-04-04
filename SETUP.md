@@ -68,6 +68,26 @@ npm run lint
 npx next build --webpack
 ```
 
+## Bootstrap inicial
+
+Gerar segredos fortes:
+
+```bash
+npm run generate:secrets
+```
+
+Criar o primeiro admin no Supabase:
+
+```bash
+npm run bootstrap:admin -- --email admin@exemplo.com --password 'senha-forte' --name 'Seu Nome'
+```
+
+Esse comando:
+
+- cria o usuário no Auth com email confirmado
+- grava `role=admin` em `app_metadata`
+- insere o usuário em `public.admin_users`
+
 ## Observações
 
 - No sandbox atual, `next build` com Turbopack já apresentou panic interno. O build com Webpack passou.
