@@ -1,0 +1,77 @@
+.page {
+  min-height: calc(100vh - 140px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: min(100%, 640px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 32px;
+  border-radius: 28px;
+  border: 1px solid var(--border-soft);
+  background:
+    radial-gradient(circle at top left, rgba(231, 76, 139, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(46, 134, 193, 0.12), transparent 32%),
+    var(--surface-primary);
+  box-shadow: 0 24px 80px rgba(21, 32, 43, 0.06);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent-blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.card p {
+  margin: 0;
+  color: var(--foreground-muted);
+  line-height: 1.8;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryButton,
+.secondaryLink {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  border-radius: 999px;
+  font: inherit;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 0;
+  font-weight: 700;
+  color: #fffafc;
+  background: linear-gradient(135deg, #e74c8b, #cc3c76);
+  box-shadow: 0 12px 30px rgba(231, 76, 139, 0.24);
+  cursor: pointer;
+}
+
+.secondaryLink {
+  border: 1px solid rgba(32, 50, 67, 0.12);
+  color: var(--foreground-strong);
+  background: rgba(255, 255, 255, 0.78);
+}

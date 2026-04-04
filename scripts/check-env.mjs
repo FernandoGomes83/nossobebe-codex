@@ -9,6 +9,7 @@ const requiredEnv = [
   "MERCADO_PAGO_WEBHOOK_SECRET",
   "RESEND_API_KEY",
   "EMAIL_FROM",
+  "CRON_SECRET",
 ];
 
 const recommendedEnv = [

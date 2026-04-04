@@ -314,6 +314,27 @@
   line-height: 1.6;
 }
 
+.consentBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(32, 50, 67, 0.12);
+  background: rgba(255, 255, 255, 0.74);
+  line-height: 1.6;
+  color: var(--foreground-muted);
+}
+
+.consentBox input {
+  margin-top: 3px;
+  accent-color: var(--color-accent-pink);
+}
+
+.consentBox span {
+  display: block;
+}
+
 .submitButton {
   width: fit-content;
   min-height: 52px;

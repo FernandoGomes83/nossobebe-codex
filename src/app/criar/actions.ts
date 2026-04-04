@@ -49,6 +49,7 @@ export async function validateDraftOrder(
     musicTone: formData.get("musicTone") ?? undefined,
     specialWords: formData.get("specialWords") ?? undefined,
     artStyle: formData.get("artStyle") ?? undefined,
+    dripConsent: formData.get("dripConsent") ?? undefined,
     selectedPack: formData.get("selectedPack") ?? undefined,
     selectedProducts: formData.getAll("selectedProducts"),
   });

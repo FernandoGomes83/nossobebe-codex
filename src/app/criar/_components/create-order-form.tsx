@@ -314,6 +314,14 @@ export function CreateOrderForm() {
             </div>
           </div>
 
+          <label className={styles.consentBox}>
+            <input name="dripConsent" type="checkbox" />
+            <span>
+              Quero receber emails semanais com dicas e marcos do bebe por ate
+              12 semanas. Posso cancelar quando quiser.
+            </span>
+          </label>
+
           {state?.message ? (
             <p className={state.success ? styles.success : styles.error}>
               {state.message}

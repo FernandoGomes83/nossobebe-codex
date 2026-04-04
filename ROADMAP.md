@@ -192,7 +192,7 @@ Evidencias:
 
 ## Milestone 10: Email
 
-Status: `parcial`
+Status: `feito`
 
 Feito:
 
@@ -201,18 +201,19 @@ Feito:
   - pedido recebido
   - pagamento aprovado
   - entrega pronta
-
-Pendente:
-
-- preferencia e consentimento de drip
-- agendamento de drip semanal
-- unsubscribe
+- preferencia explicita e consentimento de drip no checkout
+- agendamento real de jobs semanais apos pagamento aprovado
+- unsubscribe publico com cancelamento dos jobs pendentes
 
 Evidencias:
 
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/client.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/client.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/service.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/email/service.ts)
 - [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/email-events.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/orders/email-events.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/drip/service.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/lib/drip/service.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/internal/drip/process/route.ts](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/api/internal/drip/process/route.ts)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/email/unsubscribe/[token]/page.tsx](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/src/app/email/unsubscribe/[token]/page.tsx)
+- [/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/vercel.json](/Users/fernando/Desenvolvimento/pessoal/nossobebe_codex/vercel.json)
 
 ## Milestone 11: Blog e AdSense readiness
 
@@ -286,32 +287,31 @@ Evidencias:
 
 Bloco:
 
-- `fix: harden payment webhook and upload cleanup`
+- `feat: implement drip consent, scheduling and unsubscribe`
 
 Escopo:
 
-- validacao estrutural e idempotencia mais segura no webhook do Mercado Pago
-- transicoes de status protegidas no webhook e no admin
-- limpeza automatica de uploads expirados e fotos apos uso operacional
+- consentimento explicito de emails semanais no checkout
+- criacao de jobs reais com cron autenticado e processamento idempotente
+- unsubscribe publico com cancelamento da fila pendente
 
 Commit:
 
-- `3865358`
+- `pendente de commit`
 
 ## Proximo bloco correto
-
-Fechar os pendentes de `Milestone 10`:
-
-- preferencia e consentimento de drip
-- agendamento de jobs reais
-- unsubscribe
-
-## Bloco seguinte
 
 Retomar os pendentes restantes de:
 
 - `Milestone 3`
 - `Milestone 13`
+
+## Bloco seguinte
+
+Depois disso, atacar:
+
+- `Milestone 11`
+- `Milestone 12`
 
 Escopo alvo:
 

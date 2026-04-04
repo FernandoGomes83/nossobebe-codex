@@ -7,6 +7,7 @@ import { encryptEmail, hashEmail } from "@/lib/security/crypto";
 import { createPreferenceClient } from "@/lib/mercadopago/client";
 import { getServerEnv } from "@/lib/env";
 import { formatPrice } from "@/lib/catalog";
+import { upsertDripSubscriptionForOrder } from "@/lib/drip/service";
 import { getCheckoutUploadDeleteAfter } from "@/lib/uploads/cleanup";
 
 function addHours(date: Date, hours: number) {
@@ -87,6 +88,12 @@ export async function createOrderCheckout(input: OrderDraftInput) {
   if (statusEventError) {
     throw new Error("Could not create order status event.");
   }
+
+  await upsertDripSubscriptionForOrder({
+    orderId: order.id,
+    customerEmail: input.customerEmail,
+    consented: input.dripConsent,
+  });
 
   const orderAccessToken = createOrderAccessToken(order.public_token);
   const orderStatusUrl = `${env.appUrl}/pedido/${orderAccessToken}`;

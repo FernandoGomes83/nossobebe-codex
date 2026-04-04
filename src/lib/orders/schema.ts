@@ -90,6 +90,7 @@ export const orderDraftSchema = z
     artStyle: z
       .enum(["aquarela", "ilustracao", "minimalista", "retro"])
       .optional(),
+    dripConsent: z.boolean(),
     selectedPack: z.boolean(),
     selectedProducts: z.array(z.enum(INDIVIDUAL_PRODUCT_KINDS)).max(5),
   })
@@ -161,6 +162,7 @@ export function normalizeOrderDraftInput(
     musicTone: toOptionalMusicTone(raw.musicTone),
     specialWords: String(raw.specialWords ?? "").trim(),
     artStyle: toOptionalArtStyle(raw.artStyle),
+    dripConsent: raw.dripConsent === "on",
     selectedPack,
     selectedProducts: selectedProducts.map((value) => String(value).trim()) as
       | OrderDraftInput["selectedProducts"]

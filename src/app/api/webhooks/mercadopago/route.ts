@@ -2,6 +2,10 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import {
+  cancelPendingDripJobsForOrder,
+  scheduleWeeklyDripJobsForOrder,
+} from "@/lib/drip/service";
 import { createPaymentClient } from "@/lib/mercadopago/client";
 import { validateMercadoPagoWebhookSignature } from "@/lib/mercadopago/webhook";
 import { notifyPaymentApproved } from "@/lib/orders/email-events";
@@ -270,9 +274,14 @@ export async function POST(request: NextRequest) {
 
     if (appliedOrderStatus === "paid") {
       await retainOrderUploads(externalReference);
+      await scheduleWeeklyDripJobsForOrder(externalReference, order.paid_at ?? now);
     }
 
     if (appliedOrderStatus === "refunded") {
+      await cancelPendingDripJobsForOrder(
+        externalReference,
+        "Order refunded before all drip emails were sent.",
+      );
       await scheduleOrderUploadDeletion(
         externalReference,
         getRefundedUploadDeleteAfter(),

@@ -6,6 +6,7 @@ import {
   buildDeliveryPublishedEmail,
   buildOrderCreatedEmail,
   buildPaymentApprovedEmail,
+  buildWeeklyDripEmail,
 } from "@/lib/email/templates";
 
 type OrderEmailContext = {
@@ -19,6 +20,11 @@ function buildOrderUrl(publicToken: string) {
   const env = getServerEnv();
   const accessToken = createOrderAccessToken(publicToken);
   return `${env.appUrl}/pedido/${accessToken}`;
+}
+
+function buildUnsubscribeUrl(unsubscribeToken: string) {
+  const env = getServerEnv();
+  return `${env.appUrl}/email/unsubscribe/${unsubscribeToken}`;
 }
 
 function formatPrice(priceCents: number) {
@@ -87,6 +93,27 @@ export async function sendDeliveryPublishedEmail(order: OrderEmailContext) {
   await sendEmail({
     to,
     subject: `Entrega disponivel para ${order.babyName}`,
+    html: template.html,
+  });
+}
+
+export async function sendWeeklyDripEmail(
+  input: OrderEmailContext & {
+    unsubscribeToken: string;
+    weekNumber: number;
+  },
+) {
+  const to = decryptEmail(input.customerEmailCiphertext);
+  const template = buildWeeklyDripEmail({
+    babyName: input.babyName,
+    weekNumber: input.weekNumber,
+    orderUrl: buildOrderUrl(input.publicToken),
+    unsubscribeUrl: buildUnsubscribeUrl(input.unsubscribeToken),
+  });
+
+  await sendEmail({
+    to,
+    subject: template.subject,
     html: template.html,
   });
 }
