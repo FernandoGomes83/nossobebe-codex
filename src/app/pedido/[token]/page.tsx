@@ -105,6 +105,11 @@ export default async function OrderStatusPage({ params }: OrderStatusPageProps) 
               ? `${data.deliverables.length} arquivo(s)`
               : "Nenhum arquivo publicado ainda"}
           </strong>
+          {data.deliverables.length > 0 ? (
+            <a className={styles.primaryLink} href={`/api/pedido/${token}/zip`}>
+              Baixar ZIP consolidado
+            </a>
+          ) : null}
           <ul className={styles.deliverableList}>
             {data.deliverables.map((item) => (
               <li key={`${item.kind}-${item.storage_path}`}>

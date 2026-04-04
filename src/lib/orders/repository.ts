@@ -247,3 +247,32 @@ export async function getOrderStatusByPublicToken(publicToken: string) {
     deliverables: signedDeliverables,
   };
 }
+
+export async function getPublishedDeliverablesByPublicToken(publicToken: string) {
+  const admin = createAdminClient();
+  const { data: order, error: orderError } = await admin
+    .from("orders")
+    .select("id, baby_name")
+    .eq("public_token", publicToken)
+    .maybeSingle();
+
+  if (orderError || !order) {
+    return null;
+  }
+
+  const { data: deliverables, error: deliverablesError } = await admin
+    .from("deliverables")
+    .select("id, kind, storage_path, mime_type")
+    .eq("order_id", order.id)
+    .not("published_at", "is", null)
+    .order("created_at", { ascending: true });
+
+  if (deliverablesError) {
+    return null;
+  }
+
+  return {
+    order,
+    deliverables: deliverables ?? [],
+  };
+}
